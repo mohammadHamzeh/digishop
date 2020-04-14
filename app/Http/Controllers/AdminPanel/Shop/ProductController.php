@@ -2,11 +2,29 @@
 
 namespace App\Http\Controllers\AdminPanel\Shop;
 
+use App\Filters\AdminPanel\ProductFilter;
 use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\CategoryRepositoryInterface;
+use App\Repositories\Contracts\ProductRepositoryInterface;
+use App\Repositories\Contracts\TagRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    /**
+     * @var ProductRepositoryInterface
+     */
+    protected $productRepository;
+    protected $categoryRepository;
+    protected $tagRepository;
+
+    public function __construct(ProductRepositoryInterface $productRepository)
+    {
+        $this->productRepository = $productRepository;
+        $this->categoryRepository = resolve(CategoryRepositoryInterface::class);
+        $this->tagRepository = resolve(TagRepositoryInterface::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +32,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = $this->productRepository->filters(new ProductFilter())->paginate(6);
+        $productStatues  = $this->productRepository->productStatuses();
+        return view('admin.products.index', compact('products', 'productStatues'));
     }
 
     /**

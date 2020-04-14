@@ -4,6 +4,8 @@
 namespace App\Repositories\Contracts;
 
 
+use App\Filters\contracts\QueryFilter;
+
 interface RepositoryInterface
 {
     public function all(array $columns = null, array $relations = []);
@@ -29,4 +31,7 @@ interface RepositoryInterface
     public function deleteBy(array $criteria);
 
     public function findWith(int $id, $relations = []);
+
+    public function filters(QueryFilter $builder);
+
 }

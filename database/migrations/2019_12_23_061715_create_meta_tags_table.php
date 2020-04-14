@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoriesTable extends Migration
+class CreateMetaTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
+        Schema::create('meta_datas', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('title');
-            $table->integer('parent_id')->nullable();
+            $table->string('description');
+            $table->string('image')->nullable();
+            $table->string('keyword')->nullable();
+            $table->string('author')->nullable();
+            $table->morphs('metadata_for');
             $table->timestamps();
         });
-
-        Schema::create('categorizables', function (Blueprint $table) {
-            $table->unsignedBigInteger('category_id');
-            $table->morphs('categorizable');
-        });
-
     }
 
     /**
@@ -34,6 +32,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('meta_tags');
     }
 }

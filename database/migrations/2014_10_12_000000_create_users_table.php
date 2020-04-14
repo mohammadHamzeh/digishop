@@ -22,7 +22,6 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('code_country');
             $table->date('verify_at');
-            $table->tinyInteger('role')->default(1)->comment('1:User 2:editor');
             $table->rememberToken();
             $table->tinyInteger('status');
             $table->timestamps();

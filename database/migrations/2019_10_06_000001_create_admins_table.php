@@ -14,7 +14,7 @@ class CreateAdminsTable extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id('id');
             $table->string('avatar_image')->nullable();
             $table->string('name');
             $table->string('family');

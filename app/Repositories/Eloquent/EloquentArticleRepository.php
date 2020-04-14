@@ -12,4 +12,11 @@ class EloquentArticleRepository   extends EloquentBaseRepository implements Arti
 {
     protected $model = Article::class;
 
+    public function articleStatues(): array
+    {
+        return [
+            self::PUBLISHED => 'منتشر شده',
+            self::DRAFT => 'پیش نویس',
+        ];
+    }
 }

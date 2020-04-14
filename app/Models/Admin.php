@@ -45,6 +45,11 @@ class Admin extends Authenticatable
         return Jalalian::forge($value)->format('%Y/%m/%d H:i');
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['name'] . ' ' . $this->attributes['family'];
+    }
+
     /**
      * Send the password reset notification.
      *

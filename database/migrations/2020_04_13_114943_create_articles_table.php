@@ -17,10 +17,14 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->unsignedBigInteger('author_id');
+            $table->text('text');
             $table->integer('view_count')->nullable();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('slug');
+            $table->unsignedBigInteger('author_id');
+            $table->foreign('author_id')->references('id')->on('admins')->cascadeOnDelete();
+            $table->unsignedBigInteger('editor_id')->nullable();
+            $table->foreign('editor_id')->references('id')->on('admins')->cascadeOnDelete();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

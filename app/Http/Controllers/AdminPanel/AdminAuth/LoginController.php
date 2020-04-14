@@ -38,7 +38,7 @@ class LoginController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param Request $request
      */
     public function __construct(Request $request)
     {

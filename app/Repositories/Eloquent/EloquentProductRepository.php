@@ -12,4 +12,11 @@ class EloquentProductRepository extends EloquentBaseRepository implements Produc
 {
     protected $model = Product::class;
 
+    public function productStatuses()
+    {
+        return [
+            self::PUBLISHED => 'منتشر شده',
+            self::DRAFT => 'پیش نویس'
+        ];
+    }
 }

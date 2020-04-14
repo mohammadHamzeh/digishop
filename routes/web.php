@@ -30,7 +30,8 @@ Route::group(['namespace'=>'AdminPanel','prefix'=>'admin'], function () {
         Route::post('roles/{id}/transform','RolesController@transform');
 
         // Route::resources(['permissions'=>'PermissionsController']);
-
+        Route::resource('articles', 'Article\ArticleController');
+        Route::resource('products', 'Shop\ProductController');
         //route insert head ->
         
         Route::resources(['panel_settings' => 'Panel_settingsController']);

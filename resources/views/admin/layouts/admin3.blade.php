@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title> @yield('title') </title>
-        <link rel="icon" href="<?=asset('img/logo.png')?>" type="image/png">
+        <link rel="icon" href="<?=asset('img/' . $panel_settings->logo)?>" type="image/png">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" href="{{asset('fontawsome/releases/v0.0.0/css/pro.min.css')}}">

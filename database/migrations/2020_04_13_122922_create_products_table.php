@@ -17,10 +17,12 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->text('text');
             $table->integer('price');
             $table->integer('stock')->nullable();
             $table->string('image');
             $table->string('slug');
+            $table->tinyInteger('status')->default(1)->comment('1:published 2:draft');
             $table->timestamps();
         });
     }
