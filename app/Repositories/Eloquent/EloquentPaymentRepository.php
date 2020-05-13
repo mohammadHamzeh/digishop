@@ -10,6 +10,14 @@ use App\Repositories\Eloquent\Contracts\EloquentBaseRepository;
 
 class EloquentPaymentRepository extends EloquentBaseRepository implements PaymentRepositoryInterface
 {
+
     protected $model = Payment::class;
 
+    public static function paymentStatus()
+    {
+        return [
+            'پرداخت شده' => self::PAID,
+            'پرداخت نشده' => self::UNPAID
+        ];
+    }
 }

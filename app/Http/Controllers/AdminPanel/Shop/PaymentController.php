@@ -2,11 +2,24 @@
 
 namespace App\Http\Controllers\AdminPanel\Shop;
 
+use App\Filters\AdminPanel\PaymentFilter;
 use App\Http\Controllers\Controller;
+use App\Repositories\Contracts\PaymentRepositoryInterface;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+
+    protected $paymentRepository;
+
+    /**
+     * PaymentController constructor.
+     * @param PaymentRepositoryInterface $repository
+     */
+    public function __construct(PaymentRepositoryInterface $repository)
+    {
+        $this->paymentRepository = $repository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +27,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = $this->paymentRepository->filters(new PaymentFilter())->paginate(config('paginate.per_page'));
+        $paymentStatus = $this->paymentRepository::paymentStatus();
+        return view('admin.payments.index', compact('payments','paymentStatus'));
     }
 
     /**

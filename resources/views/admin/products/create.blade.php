@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin3')
 @section('title')
-    مقاله جدید
+    محصول جدید
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{asset('assets3/vendor/sweetalert2/dist/sweetalert2.min.css')}}">
@@ -9,14 +9,14 @@
 
 @section('content')
     <div class="header">
-        <h6 class="h2 mb-0 mt-3">مقاله جدید</h6>
+        <h6 class="h2 mb-0 mt-3">محصول جدید</h6>
         <div class="header-body">
             <div class="col-12 py-4">
                 <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                     <ol class="breadcrumb breadcrumb-links">
                         <li class="breadcrumb-item"><a href="{{url('/admin')}}"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item"><a href="{{url('/admin/articles')}}">لیست مقالات</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">مقاله جدید</li>
+                        <li class="breadcrumb-item"><a href="{{url('/admin/products')}}">لیست محصولات</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">محصول جدید</li>
                     </ol>
                 </nav>
             </div>
@@ -30,7 +30,7 @@
                         <div class="img_upload">
                             <img src="" alt="">
                             <button class="btn" type="button">انتخاب عکس</button>
-                            <input type="file" class="file_upload" name="blog_img">
+                            <input type="file" class="file_upload" name="product_img">
                         </div>
                     </div>
                 </div>
@@ -57,6 +57,21 @@
                     </div>
                 </div>
                 <div class="form-row mb-3">
+                    <div class="col-6">
+                        <label class="form-control-label">قیمت <i class="fas fa-star-of-life text-red"
+                                                                  style="font-size:8px;"></i></label>
+                        <input type="text" class="form-control form-control-alternative price_number" name="price"
+                               placeholder="قیمت به تومان...">
+                    </div>
+                    <div class="col-6">
+                        <label class="form-control-label">موجودی انبار <i class="fas fa-star-of-life text-red"
+                                                                          style="font-size:8px;"></i></label>
+                        <input type="text" class="form-control form-control-alternative" name="stock"
+                               placeholder="مثلا:۲۰ ">
+                    </div>
+                </div>
+
+                <div class="form-row mb-3">
                     <div class="col-12">
                         <label class="form-control-label">دسته بندی ها <i class="fas fa-star-of-life text-red"
                                                                           style="font-size:8px;"></i></label>
@@ -64,11 +79,12 @@
                             <div class="postCategories custom-control custom-checkbox mb-3">
                                 @include('admin.category.list',['items' => $categories['root']])
                             </div>
+                            برای ایجاد دسته بندی جدید  <a
+                                    href="{{route('categories.create')}}">اینجا کلیک کنید</a>
                         @else
                             <br>
-                            دسته بندی برای نمایش وجود ندارد! برای ایجاد دسته بندی اینجا <a href="{{--todo
-                            route category--}}">کلیک
-                                کنید</a>
+                            دسته بندی برای نمایش وجود ندارد! برای ایجاد دسته بندی <a
+                                    href="{{route('categories.create')}}">اینجا کلیک کنید</a>
                         @endif
 
                     </div>
@@ -84,8 +100,8 @@
                     <div class="col-12">
                         <label class="form-control-label">وضعیت انتشار
                             <i class="fas fa-star-of-life text-red" style="font-size:8px;"></i></label>
-                        <select name="articleStatus" id="articleStatus" class="form-control">
-                            @foreach($articleStatus as $key=>$value)
+                        <select name="productsStatus" id="productsStatus" class="form-control">
+                            @foreach($productStatus as $key=>$value)
                                 <option value="{{$key}}">{{$value}}</option>
                             @endforeach
                         </select>
@@ -145,7 +161,6 @@
 
     <script>
         $('.navbar-search').remove();
-
         var editor = $('#summernote').summernote({
             height: '350px', rtl: true
         });
@@ -170,7 +185,9 @@
             var description = $('.card-body textarea[name="description"]').val();
             var text = $('#summernote').summernote('code');
             var tags = $('.card-body input[name="tags"]').val();
-            var articleStatus = $('.card-body select[name="articleStatus"]').val();
+            var price = $('.card-body input[name="price"]').val();
+            var productsStatus = $('.card-body select[name="productsStatus"]').val();
+            var stock = $('.card-body input[name="stock"]').val();
             var CheckCategories = [];
             var categories = $('.card-body input[name="categories"]:checked').each(function () {
                 CheckCategories.push($(this).val());
@@ -180,13 +197,15 @@
             var meta_data_keyword = $('.card-body input[name="meta_data_keyword"]').val();
             var meta_data_author = $('.card-body input[name="meta_data_author"]').val();
 
-            if (title != "" && description != "" && text != "") {
+            if (title != "" && description != "" && text != "" && price != "") {
                 form_data.append('_token', $('meta[name=csrf-token]').attr('content'));
                 form_data.append('title', title);
                 form_data.append('description', description);
                 form_data.append('text', text);
                 form_data.append('tags', tags);
-                form_data.append('articleStatus', articleStatus);
+                form_data.append('stock', stock);
+                form_data.append('price', price);
+                form_data.append('status', productsStatus);
                 form_data.append('categories', CheckCategories);
                 form_data.append('meta_data_title', meta_data_title);
                 form_data.append('meta_data_description', meta_data_description);
@@ -194,7 +213,7 @@
                 form_data.append('meta_data_author', meta_data_author);
                 load_screen(true);
                 $.ajax({
-                    url: "{{url('admin/articles')}}",
+                    url: "{{url('admin/products')}}",
                     type: "post",
                     data: form_data,
                     dataType: "text",

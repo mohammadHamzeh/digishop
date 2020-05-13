@@ -12,4 +12,11 @@ class EloquentOrderRepository extends EloquentBaseRepository implements OrderRep
 {
     protected $model = Order::class;
 
+    public static function orderStatuses()
+    {
+        return [
+            'ثبت شده' => self::REGISTERED,
+            'ارسال شده' => self::SUBMIT
+        ];
+    }
 }

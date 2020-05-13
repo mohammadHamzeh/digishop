@@ -18,8 +18,8 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->string('method');
-            $table->string('gateway');
-            $table->string('ref_num');
+            $table->string('gateway')->nullable();
+            $table->string('ref_num')->nullable();
             $table->integer('amount');
             $table->tinyInteger('status');
             $table->timestamps();

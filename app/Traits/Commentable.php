@@ -4,7 +4,8 @@
 namespace App\Traits;
 
 
-use App\Model\Comment;
+
+use App\Models\Comment;
 
 trait Commentable
 {

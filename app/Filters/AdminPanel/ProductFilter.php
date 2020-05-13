@@ -12,4 +12,10 @@ class ProductFilter extends QueryFilter
     {
         return $this->builder->where('title', 'LIKE', "%$value%");
     }
+
+    public function status($value)
+    {
+        return $value == "all" ? $this->builder    : $this->builder->where('status', $value);
+    }
+    
 }

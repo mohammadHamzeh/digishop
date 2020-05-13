@@ -28,63 +28,8 @@
 
     </head>
     <body class="g-sidenav-pinned {{App::isLocale('fa')?'rtl':''}} bg-white" data-gr-c-s-loaded="true">
-        
-        <nav class="sidenav navbar navbar-vertical {{App::isLocale('fa')?'fixed-right':'fixed-left'}} navbar-expand-xs navbar-dark bg-white p-0" id="sidenav-main">
-            <!-- Brand -->
-            <div class="sidenav-header d-flex flex-md-column align-items-center justify-content-center">
-                <a class="navbar-brand p-1" href="{{url('/')}}">
-                    <img src="{{asset('img/'.$panel_settings->logo)}}" class="navbar-brand-img" alt="...">
-                </a>
-                <h1 class="m-0 p-2 text-light">{{$panel_settings->title}}</h1>
-                <div class="ml-auto d-none">
-                    <!-- Sidenav toggler -->
-                    <div class="sidenav-toggler d-none" data-action="sidenav-unpin" data-target="#sidenav-main">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="navbar-inner">
-                <!-- Collapse -->
-                <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-                    <!-- Nav items -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link {{$current_route=='/admin/home'?'active':''}}" href="<?=url('admin')?>"> <i class="fad fa-chart-area text-green"></i><span class="nav-link-text">داشبورد</span> </a>
-                        </li>
-                        @canany(['admin.browse','role.browse','permission.browse'])
-                        <li class="nav-item">
-                            <a class="nav-link {{$current_route=='/admin/admins'||$current_route=='/admin/roles'||$current_route=='/admin/permissions'?'active':''}}" href="#navbar-admins" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-admins">
-                                <i class="fad fa-users-crown text-yellow"></i><span class="nav-link-text">مدیریت ادمین</span>
-                            </a>
-                            <div class="collapse {{$current_route=='/admin/admins'||$current_route=='/admin/roles'||$current_route=='/admin/permissions'?'show':''}}" id="navbar-admins">
-                                <ul class="nav nav-sm flex-column">
-                                    @can('admin.browse') <li class="nav-item"><a href="<?=url('admin/admins')?>" class="nav-link {{$current_route=='/admin/admins'?'active':''}}"><i class="fad fa-user-shield text-yellow"></i> لیست ادمین ها</a></li> @endcan
-                                    @can('role.browse') <li class="nav-item"><a href="<?=url('admin/roles')?>" class="nav-link {{$current_route=='/admin/roles'?'active':''}}"><i class="fad fa-user-tag text-yellow"></i> گروه بندی دسترسی</a></li> @endcan
-                                    @can('permission.browse') <!-- <li class="nav-item"><a href="<?=url('admin/permissions')?>" class="nav-link {{$current_route=='/admin/permissions'?'active':''}}"><i class="fad fa-user-lock text-yellow"></i> تعریف دسترسی</a></li> --> @endcan
-                                </ul>
-                            </div>
-                        </li>
-                        @endcanany
-                        @can('about_us.browse')
-                        <li class="nav-item">
-                            <a class="nav-link {{$current_route=='/admin/about_us'?'active':''}}" href="<?=url('admin/about_us');?>"><i class="fad fa-receipt text-orange"></i> <span class="nav-link-text">درباره ما</span></a>
-                        </li>
-                        @endcan
-                        @can('panel_settings.browse')
-                        <hr class="my-1 w-75 border-light">
-                        <li class="nav-item">
-                            <a class="nav-link {{$current_route=='/admin/panel_settings'?'active':''}}" href="<?=url('admin/panel_settings');?>"><i class="fad fa-sliders-h-square text-gray"></i> <span class="nav-link-text">تنظیمات پنل</span></a>
-                        </li>
-                        @endcan
-                    </ul>
-                </div>
-            </div>
-        </nav>
 
+    @include('admin.layouts.sidebar')
         <div class="main-content" id="panel">
             <!-- Topnav -->
             <nav class="navbar navbar-top navbar-expand navbar-light bg-white border-bottom">
@@ -194,12 +139,14 @@
                             <ul class="nav nav-footer justify-content-center justify-content-lg-start">
                                 {{-- <li class="nav-item"><a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a></li> --}}
                                 {{-- <li class="nav-item"><a href="https://demos.creative-tim.com/argon-dashboard-pro/docs/getting-started/overview.html" class="nav-link" target="_blank">Documention</a></li> --}}
-                                <li class="nav-item"><a href="https://ratechcompany.com" class="nav-link" target="_blank">پشتیبانی راتک</a></li>
+                                <li class="nav-item"><a href="https://t.me/mr_me_h" class="nav-link" target="_blank">پشتیبانی
+                                        محمد حمزه</a></li>
                             </ul>
                         </div>
                         <div class="col-lg-6">
                             <div class="copyright text-muted text-center {{App::isLocale('fa')?'text-lg-left':'text-lg-right'}}">
-                                © {{date('Y')}} <a href="https://ratechcompany.com" class="font-weight-bold" target="_blank">گروه راتک</a>
+                                © {{date('Y')}} <a href="" class="font-weight-bold"
+                                                   target="_blank">طراحی و توسعه : محمد حمزه</a>
                             </div>
                         </div>
                     </div>

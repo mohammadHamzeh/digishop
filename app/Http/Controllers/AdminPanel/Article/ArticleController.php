@@ -15,6 +15,7 @@ use App\Repositories\Contracts\TagRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -41,10 +42,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = $this->articleRepository->filters(new ArticleFilters())->with(['creator', 'editor'])->paginate(6);
+        $articles = $this->articleRepository->filters(new ArticleFilters())->with(['creator', 'editor'])->paginate(config('paginate.per_page'));
         $articleStatues = $this->articleRepository->articleStatues();
         return view('admin.articles.index', compact('articles', 'articleStatues'));
-
     }
 
     /**
@@ -147,10 +147,20 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $article->categories()->sync([]);
-        $article->tags()->sync([]);
-        $article->meta_tag()->delete();
-        $article->delete();
+        try {
+            $this->articleRepository->beginTransaction();
+            $article->categories()->sync([]);
+            $article->tags()->sync([]);
+            $article->meta_tag()->delete();
+            Storage::delete($article->image);
+            $article->delete();
+            $this->articleRepository->commit();
+        } catch (\Exception $e) {
+            $this->articleRepository->rollback();
+            return response()->json([
+                'error' => 'مشکلی در هنگام عملیات پیش آمده لطفا بعدا امتحان کنید'
+            ], 422);
+        }
         return \response()->json([
             'success' => true
         ], 200);
@@ -200,7 +210,7 @@ class ArticleController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'text' => $request->text,
-            'slug' => $request->title,
+            'slug' => Str::of($request->title)->replace(' ', '-'),
             'author_id' => $request->user('admin')->id,
             'status' => $request->articleStatus
         ]);
@@ -253,7 +263,7 @@ class ArticleController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'text' => $request->text,
-            'slug' => $request->title,
+            'slug' => Str::of($request->title)->replace(' ','-'),
             'author_id' => $request->user('admin')->id,
             'status' => $request->articleStatus
         ]);
@@ -287,5 +297,11 @@ class ArticleController extends Controller
             ]);
         }
         return $meta_data;
+    }
+
+    public function changeStatus(Article $article)
+    {
+        $article->update(['status' => $article->status == 1 ? 2 : 1]);
+        return response(['success' => true, 'state' => $article->status]);
     }
 }

@@ -18,6 +18,6 @@ class ArticleFilters extends QueryFilter
 
     public function status($value)
     {
-        return $this->builder->where('status', $value);
+        return $value == "all" ? $this->builder : $this->builder->where('status', $value);
     }
 }

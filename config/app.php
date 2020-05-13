@@ -106,7 +106,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'fa_IR',
 
     /*
     |--------------------------------------------------------------------------
@@ -176,7 +176,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*Repository Service Provider*/
-        \App\Providers\RepositoryServiceProvider::class
+        \App\Providers\RepositoryServiceProvider::class,
+        \App\Providers\StorageServiceProvider::class,
+        \App\Providers\SummaryServiceProvider::class
 
     ],
 

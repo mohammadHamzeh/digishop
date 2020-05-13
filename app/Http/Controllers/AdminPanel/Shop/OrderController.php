@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers\AdminPanel\Shop;
 
+use App\Filters\AdminPanel\OrderFilters;
 use App\Http\Controllers\Controller;
+use App\Models\Shop\Order;
+use App\Repositories\Contracts\OrderRepositoryInterface;
+use App\Repositories\Contracts\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    protected $orderRepository;
+
+    public function __construct(OrderRepositoryInterface $repository)
+    {
+        $this->orderRepository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = $this->orderRepository->filters(new OrderFilters())->with(['user', 'payment'])->paginate(config('paginate.per_page'));
+        $orderStatus = $this->orderRepository::orderStatuses();
+        return view('admin.orders.index', compact('orders', 'orderStatus'));
     }
 
     /**
@@ -41,12 +54,13 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Order $order
+     * @return void
      */
-    public function show($id)
+    public function show(Order $order)
     {
-        //
+        $products = $order->products()->paginate(config('paginate.per_page'));
+        return view('admin.orders.index_order', compact('products'));
     }
 
     /**
@@ -81,5 +95,13 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function changeStatus(Order $order)
+    {
+        $order->update(['status' => OrderRepositoryInterface::SUBMIT]);
+        return response()->json([
+            'success' => true
+        ], 200);
     }
 }

@@ -21,7 +21,6 @@ class RedirectIfNotAdmin
 	    if (!Auth::guard($guard)->check()) {
 	        return redirect('admin/login');
 		}
-		
 		$admin = Auth::guard($guard)->user();
 
 		// check if admin is disabled

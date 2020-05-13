@@ -6,6 +6,7 @@ namespace App\Repositories\Eloquent\Contracts;
 
 use App\Filters\contracts\QueryFilter;
 use App\Repositories\Contracts\RepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class EloquentBaseRepository implements RepositoryInterface
 {
@@ -29,7 +30,7 @@ class EloquentBaseRepository implements RepositoryInterface
         return $this->model::paginate($page);
     }
 
-    public function find(int $ID)
+    public function find($ID)
     {
         return $this->model::find($ID);
     }
@@ -96,9 +97,24 @@ class EloquentBaseRepository implements RepositoryInterface
         return $this->model::find($id);
     }
 
-        public function filters(QueryFilter $builder)
-        {
-            return $this->model::filters($builder);
-        }
+    public function filters(QueryFilter $builder)
+    {
+        return $this->model::filters($builder);
+    }
+
+    public function beginTransaction()
+    {
+        DB::beginTransaction();
+    }
+
+    public function commit()
+    {
+        DB::commit();
+    }
+
+    public function rollback()
+    {
+        DB::rollBack();
+    }
 
 }

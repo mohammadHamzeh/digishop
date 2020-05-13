@@ -46,11 +46,44 @@ class SuperAdmin extends Seeder
             ['role.disable', 'فعال/غیرفعال سازی سطح دسترسی'],
             ['role.transform', 'انتقال داده های سطح دسترسی'],
 
+            ['article.browse', 'جستجو مقالات'],
+            ['article.read', 'مشاهده مقالات'],
+            ['article.edit', 'ویرایش مقالات'],
+            ['article.add', 'افزودن مقالات'],
+            ['article.ban', 'مسدود مقالات'],
+            ['article.delete', 'حذف مقالات'],
+
+            ['category.browse', 'جستجو دسته بندی ها'],
+            ['category.read', 'مشاهده دسته بندی ها'],
+            ['category.edit', 'ویرایش دسته بندی ها'],
+            ['category.add', 'افزودن دسته بندی ها'],
+            ['category.delete', 'حذف دسته بندی ها'],
+
+            ['product.browse', 'جستجو محصولات'],
+            ['product.read', 'مشاهده محصولات'],
+            ['product.edit', 'ویرایش محصولات'],
+            ['product.add', 'افزودن محصولات'],
+            ['product.delete', 'حذف محصولات'],
+
+            ['order.browse', 'جستجو سفارش ها'],
+            ['order.read', 'مشاهده سفارش ها'],
+            ['order.edit', 'ویرایش سفارش ها'],
+            ['order.add', 'افزودن سفارش ها'],
+            ['order.delete', 'حذف سفارش ها'],
+
+            ['payment.browse', 'جستجو پرداخت ها'],
+            ['payment.read', 'مشاهده پرداخت ها'],
+            ['payment.edit', 'ویرایش پرداخت ها'],
+            ['payment.add', 'افزودن پرداخت ها'],
+            ['payment.delete', 'حذف پرداخت ها'],
+            
             ['panel_settings.browse', 'جستجو تنظیمات پنل'],
             ['panel_settings.read', 'مشاهده تنظیمات پنل'],
             ['panel_settings.edit', 'ویرایش تنظیمات پنل'],
             ['panel_settings.add', 'افزودن تنظیمات پنل'],
             ['panel_settings.delete', 'حذف تنظیمات پنل'],
+
+
         ];
 
         foreach ($default_permissions as $default_permission) {

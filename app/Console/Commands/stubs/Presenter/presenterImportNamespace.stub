@@ -1,0 +1,2 @@
+use {{ namespace }}
+use App\Presenter\contracts\Presentable;

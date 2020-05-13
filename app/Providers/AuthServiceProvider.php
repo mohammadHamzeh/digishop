@@ -28,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('SuperAdmin') ? true : null;
         });
 
+
         //
     }
 }

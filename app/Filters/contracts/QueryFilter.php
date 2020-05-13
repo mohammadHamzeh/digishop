@@ -23,7 +23,7 @@ abstract class QueryFilter
         $this->builder = $builder;
         foreach ($this->filters() as $key => $value) {
             if (!method_exists($this, $key)) {
-                return 0;
+                return $this->builder;
             }
             !empty($value) ? $this->{$key}($value) : $this->{$key};
         }

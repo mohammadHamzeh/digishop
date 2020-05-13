@@ -4,8 +4,11 @@ namespace App\Providers;
 
 use App\Repositories\Contracts\AdminRepositoryInterface;
 use App\Repositories\Contracts\ArticleRepositoryInterface;
+use App\Repositories\Contracts\CartRepositoryInterface;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\CommentRepositoryInterface;
+use App\Repositories\Contracts\CouponRepositoryInterface;
+use App\Repositories\Contracts\MenuRepositoryInterface;
 use App\Repositories\Contracts\MetaTagRepositoryInterface;
 use App\Repositories\Contracts\OrderRepositoryInterface;
 use App\Repositories\Contracts\PaymentRepositoryInterface;
@@ -15,8 +18,11 @@ use App\Repositories\Contracts\UserDataRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\Eloquent\EloquentAdminRepository;
 use App\Repositories\Eloquent\EloquentArticleRepository;
+use App\Repositories\Eloquent\EloquentCartRepository;
 use App\Repositories\Eloquent\EloquentCategoryRepository;
 use App\Repositories\Eloquent\EloquentCommentRepository;
+use App\Repositories\Eloquent\EloquentCouponRepository;
+use App\Repositories\Eloquent\EloquentMenuRepositoryInterface;
 use App\Repositories\Eloquent\EloquentMetaTagRepository;
 use App\Repositories\Eloquent\EloquentOrderRepository;
 use App\Repositories\Eloquent\EloquentPaymentRepository;
@@ -56,5 +62,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UserDataRepositoryInterface::class, EloquentUserDataRepository::class);
         $this->app->bind(UserRepositoryInterface::class, EloquentUserRepository::class);
         $this->app->bind(MetaTagRepositoryInterface::class, EloquentMetaTagRepository::class);
+        $this->app->bind(CartRepositoryInterface::class, EloquentCartRepository::class);
+        $this->app->bind(CouponRepositoryInterface::class, EloquentCouponRepository::class);
+        $this->app->bind(MenuRepositoryInterface::class, EloquentMenuRepositoryInterface::class);
     }
 }

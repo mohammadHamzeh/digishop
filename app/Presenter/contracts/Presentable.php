@@ -3,12 +3,9 @@
 
 namespace App\Presenter\contracts;
 
-
-use phpDocumentor\Reflection\Types\This;
-
 trait Presentable
 {
-    protected $presetnerInstance;
+    protected $presenterInstance;
 
     public function present()
     {
@@ -16,10 +13,10 @@ trait Presentable
             throw  new \Exception('Presenter Not Found!');
         }
 
-        if (!$this->presetnerInstance) {
-            $this->presetnerInstance = new $this->presenter($this);
+        if (!$this->presenterInstance) {
+            $this->presenterInstance = new $this->presenter($this);
         }
 
-        return $this->presetnerInstance;
+        return $this->presenterInstance;
     }
 }

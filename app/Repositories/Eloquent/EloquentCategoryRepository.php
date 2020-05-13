@@ -12,4 +12,8 @@ class EloquentCategoryRepository extends EloquentBaseRepository implements Categ
 {
     protected $model = Category::class;
 
+    public function IdTitles()
+    {
+        return $this->model::pluck('title', 'id')->toArray();
+    }
 }

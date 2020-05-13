@@ -12,7 +12,7 @@ interface RepositoryInterface
 
     public function paginate(int $page);
 
-    public function find(int $ID);
+    public function find($ID);
 
     public function findBy(
         array $criteria,

@@ -6,6 +6,7 @@ use App\Filters\contracts\Filterable;
 use App\Presenter\AdminPanel\ArticlePresenter;
 use App\Presenter\contracts\Presentable;
 use App\Traits\Categorizable;
+use App\Traits\Commentable;
 use App\Traits\MetaTagable;
 use App\Traits\Taggable;
 use Illuminate\Database\Eloquent\Model;

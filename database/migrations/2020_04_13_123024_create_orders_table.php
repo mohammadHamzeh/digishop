@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('code');
             $table->string('amount');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
 

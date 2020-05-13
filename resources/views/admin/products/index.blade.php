@@ -41,7 +41,7 @@
 
                     <div class="d-flex">
                         <select class="form-control form-control-alternative w-auto" name="status">
-                            <option value="" selected>همه وضعیت ها</option>
+                            <option value="all" selected>همه وضعیت ها</option>
                             @foreach($productStatues as $key=>$value)
                                 <option value="{{$key}}" {{@request('status') == $key ?'selected':''}}>
                                     {{$value}}
@@ -71,8 +71,8 @@
                                     <td>{{$i++}}</td>
                                     <td>{{$product->title}}</td>
                                     <td>{{$product->present()->price}}</td>
-                                    <td>{{$product->stock}}</td>
-                                    <td>{{\Morilog\Jalali\Jalalian::fromDateTime($product->created_at)}}</td>
+                                    <td>{{$product->present()->stock}}</td>
+                                    <td>{{$product->present()->created_at}}</td>
                                     <td>
                                         {!!$product->present()->status !!}
                                     </td>
@@ -80,15 +80,10 @@
                                         @can('product.edit') <a class="table-action text-info" data-toggle="tooltip"
                                                                 data-original-title="ویرایش" href="{{url('admin/products/'.$product->id.'/edit')
                                                                 }}"><i class="far fa-edit"></i></a> @endcan
-                                        {{--                                        @can('product.ban') <a
-                                        class="table-action btn_ban text-warning"--}}
-                                        {{--                                                               data-toggle="tooltip"--}}
-                                        {{--
-                                        data-original-title="{{$product->disabled?'فعال':'مسدود'}}"--}}
-                                        {{--
-                                        row-id="{{$product->id}}"><i--}}
-                                        {{--                                                    class="far
-                                        {{$product->disabled?'fa-check':'fa-ban'}}"></i></a> @endcan--}}
+                                        @can('product.edit') <a class="table-action btn_ban text-warning"
+                                                                data-toggle="tooltip" data-original-title="{{$product->status?'پیش نویس
+                                                                ':'منتشر'}}" row-id="{{$product->id}}"><i class="far
+                                        {{$product->status?'fa-ban':'fa-check'}}"></i></a> @endcan
                                         @can('product.delete') <a class="table-action btn_delete text-danger"
                                                                   data-toggle="tooltip" data-original-title="حذف"
                                                                   row-id="{{$product->id}}"><i
@@ -218,7 +213,7 @@
                 if (result.value) {
                     load_screen(true);
                     $.ajax({
-                        url: "{{url('admin/products')}}/" + record_id + "/edit?action=ban",
+                        url: "{{url('admin/products')}}/" + record_id + "/status",
                         type: "get",
                         dataType: "json",
                         cache: false,
@@ -229,16 +224,7 @@
                             load_screen(false);
                             response = JSON.parse(response.responseText);
                             if (response.success) {
-                                switch (response.state) {
-                                    case 0:
-                                        elm.children('td:nth-child(' + (elm.children('td').length - 1) + ')').find('.badge[ban]').removeClass('badge-danger').addClass('badge-success').text('فعال');
-                                        btn.attr('data-original-title', 'مسدود').find('i').removeClass('fa-check').addClass('fa-ban');
-                                        break;
-                                    case 1:
-                                        elm.children('td:nth-child(' + (elm.children('td').length - 1) + ')').find('.badge[ban]').removeClass('badge-info').addClass('badge-danger').text('مسدود');
-                                        btn.attr('data-original-title', 'فعال').find('i').removeClass('fa-ban').addClass('fa-check');
-                                        break;
-                                }
+                                location.reload();
                             } else {
                                 Swal.fire({
                                     title: '',

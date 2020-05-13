@@ -19,4 +19,10 @@ class EloquentProductRepository extends EloquentBaseRepository implements Produc
             self::DRAFT => 'پیش نویس'
         ];
     }
+
+
+    public function productFrontend()
+    {
+        return $this->model::where('status', self::PUBLISHED)->where('stock', '>', 1);
+    }
 }

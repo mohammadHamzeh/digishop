@@ -25,7 +25,7 @@ class CreateArticlesTable extends Migration
             $table->foreign('author_id')->references('id')->on('admins')->cascadeOnDelete();
             $table->unsignedBigInteger('editor_id')->nullable();
             $table->foreign('editor_id')->references('id')->on('admins')->cascadeOnDelete();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(2);
             $table->timestamps();
         });
     }

@@ -10,4 +10,6 @@ interface ProductRepositoryInterface extends RepositoryInterface
     const DRAFT = 2;
 
     public function productStatuses();
+
+    public function productFrontend();
 }

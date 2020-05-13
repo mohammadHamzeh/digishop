@@ -46,7 +46,7 @@ class ForgotPasswordController extends Controller
      *
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
-    public function broker()
+    public function broker()                            
     {
         return Password::broker('admins');
     }

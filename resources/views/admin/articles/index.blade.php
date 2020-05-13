@@ -41,7 +41,7 @@
 
                     <div class="d-flex">
                         <select class="form-control form-control-alternative w-auto" name="status">
-                            <option value="" selected>همه وضعیت ها</option>
+                            <option value="all" selected>همه وضعیت ها</option>
                             @foreach($articleStatues as $key=>$value)
                                 <option value="{{$key}}" {{@request('status') == $key ?'selected':''}}>
                                     {{$value}}
@@ -67,10 +67,10 @@
                             <?php $i = ($articles->currentpage() - 1) * $articles->perpage(); $i++; ?>
                             @foreach($articles as $article)
                                 <tr row-id="{{$article->id}}">
-                                    <td>{{$i++}}</td>
+                                    <td>{{\App\Helpers\Format\Number::persianNumbers($i++)}}</td>
                                     <td>{{$article->title}}</td>
                                     <td>{{$article->creator->fullname}}</td>
-                                    <td>{{\Morilog\Jalali\Jalalian::fromDateTime($article->created_at)}}</td>
+                                    <td>{{$article->present()->created_at}}</td>
                                     <td>
                                         {!!$article->present()->status !!}
                                     </td>
@@ -79,11 +79,12 @@
                                                                 data-original-title="ویرایش"
                                                                 href="{{url('admin/articles/'.$article->id.'/edit')}}"><i
                                                     class="far fa-edit"></i></a> @endcan
-                                        {{--                                        @can('article.ban') <a class="table-action btn_ban text-warning"--}}
-                                        {{--                                                               data-toggle="tooltip"--}}
-                                        {{--                                                               data-original-title="{{$article->disabled?'فعال':'مسدود'}}"--}}
-                                        {{--                                                               row-id="{{$article->id}}"><i--}}
-                                        {{--                                                    class="far {{$article->disabled?'fa-check':'fa-ban'}}"></i></a> @endcan--}}
+                                        @can('article.ban') <a class="table-action btn_ban text-warning"
+                                                               data-toggle="tooltip"
+                                                               data-original-title="{{$article->status?'پیش نویس
+                                                               ':'منتشر'}}" row-id="{{$article->id}}"><i class="far
+                                                                {{$article->status ==1?'fa-ban':'fa-check'}}"></i></a>
+                                        @endcan
                                         @can('article.delete') <a class="table-action btn_delete text-danger"
                                                                   data-toggle="tooltip" data-original-title="حذف"
                                                                   row-id="{{$article->id}}"><i
@@ -213,7 +214,7 @@
                 if (result.value) {
                     load_screen(true);
                     $.ajax({
-                        url: "{{url('admin/articles')}}/" + record_id + "/edit?action=ban",
+                        url: "{{url('admin/articles')}}/" + record_id + "/status",
                         type: "get",
                         dataType: "json",
                         cache: false,
@@ -224,16 +225,7 @@
                             load_screen(false);
                             response = JSON.parse(response.responseText);
                             if (response.success) {
-                                switch (response.state) {
-                                    case 0:
-                                        elm.children('td:nth-child(' + (elm.children('td').length - 1) + ')').find('.badge[ban]').removeClass('badge-danger').addClass('badge-success').text('فعال');
-                                        btn.attr('data-original-title', 'مسدود').find('i').removeClass('fa-check').addClass('fa-ban');
-                                        break;
-                                    case 1:
-                                        elm.children('td:nth-child(' + (elm.children('td').length - 1) + ')').find('.badge[ban]').removeClass('badge-info').addClass('badge-danger').text('مسدود');
-                                        btn.attr('data-original-title', 'فعال').find('i').removeClass('fa-ban').addClass('fa-check');
-                                        break;
-                                }
+                                location.reload();
                             } else {
                                 Swal.fire({
                                     title: '',

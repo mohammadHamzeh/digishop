@@ -22,6 +22,7 @@ class CreateCategoriesTable extends Migration
 
         Schema::create('categorizables', function (Blueprint $table) {
             $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->morphs('categorizable');
         });
 
