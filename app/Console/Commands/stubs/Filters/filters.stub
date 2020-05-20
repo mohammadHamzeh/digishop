@@ -1,0 +1,10 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Filters\contracts\QueryFilter;
+
+class {{ class }} extends QueryFilter
+{
+  
+}

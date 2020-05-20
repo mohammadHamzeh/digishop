@@ -102,7 +102,7 @@ class PresenterMake extends Command
     private
     function getStub()
     {
-        return $this->file->get('app/Console/Commands/stubs/Presenter/presenter.stub');
+        return $this->file->get('app/Console/Commands/stubs/Presenter/filters.stub');
     }
 
     /**
@@ -121,8 +121,7 @@ class PresenterMake extends Command
      * check  the file Presenter Has Exists if yes return error
      * @param $name
      * */
-    private
-    function classExists($name)
+    private function classExists($name)
     {
         if ($this->file->exists(app_path("Presenter\\$name.php"))) {
             $this->error("Class $name Has Exists");
@@ -196,7 +195,7 @@ class PresenterMake extends Command
     private
     function UpdateModel($modelName, $PresenterNameSpace)
     {
-        $modelPath = config('presenter.modelPath');
+        $modelPath = config('modules.modelPath');
         $fullPath = app_path("$modelPath$modelName.php");
         $originalContent = $this->file->get($fullPath);
 

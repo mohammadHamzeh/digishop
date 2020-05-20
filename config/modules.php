@@ -4,5 +4,6 @@ else Your Models in Oder Directory example: Models\\
 
 */
 return [
-    'modelPath' => "Models\\"
+        'modelPath' => "Models\\"
+
 ];
